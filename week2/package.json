@@ -1,0 +1,17 @@
+{
+  "name": "week2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "hardhat test"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox-viem": "3.0.0",
+    "hardhat": "2.22.8",
+    "dotenv": "^16.4.5",
+    "dotenv-conf": "^1.1.0"
+  }
+}
