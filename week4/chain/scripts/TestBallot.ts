@@ -9,15 +9,6 @@ async function main() {
   // @ts-ignore
   const tokenContract = await viem.deployContract("MyToken");
   console.log('MyToken contract deployed at:', tokenContract.address);
-  const proposals = ['Chocolate', 'Vanilla', 'Strawberry', 'Mint-Chocolate']
-    .map((prop) => toHex(prop, { size: 32 }));
-  // @ts-ignore
-  const ballotContract = await viem.deployContract("TokenizedBallot", [
-    proposals,
-    tokenContract.address,
-    //lastBlockNumber,
-  ]);
-  console.log('Ballot contract deployed at:', ballotContract.address);
   // @ts-ignore
   let tx = await tokenContract.write.mint([acc1.account.address, MINT_VALUE]);
   // @ts-ignore
@@ -67,7 +58,14 @@ async function main() {
   await publicClient.waitForTransactionReceipt({ hash: tx })
   // @ts-ignore
   const lastBlockNumber = await publicClient.getBlockNumber();
-
+  const proposals = ['Chocolate', 'Vanilla', 'Strawberry', 'Mint-Chocolate']
+    .map((prop) => toHex(prop, { size: 32 }));
+  // @ts-ignore
+  const ballotContract = await viem.deployContract("TokenizedBallot", [
+    proposals,
+    tokenContract.address,
+    lastBlockNumber,
+  ]);
   try {
     // @ts-ignore
     await ballotContract.write.vote([0, 50], { account: deployer.account });
@@ -80,9 +78,9 @@ async function main() {
   // @ts-ignore
   await ballotContract.write.vote([1, 25], { account: acc1.account });
   // @ts-ignore
-  await ballotContract.write.vote([2, 25], { account: acc2.account });
+  await ballotContract.write.vote([1, 25], { account: acc2.account });
   // @ts-ignore
-  await ballotContract.write.vote([0, 25], { account: acc3.account });
+  await ballotContract.write.vote([2, 25], { account: acc3.account });
 
   // @ts-ignore
   const winnerName = await ballotContract.read.winnerName();

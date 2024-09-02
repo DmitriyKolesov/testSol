@@ -21,11 +21,8 @@ contract TokenizedBallot {
 
     uint256 public targetBlockNumber;
 
-    constructor(bytes32[] memory proposalNames, address _tokenContract
-    //, uint256 _targetBlockNumber
-    ) {
-        //targetBlockNumber =
-                    //_targetBlockNumber;
+    constructor(bytes32[] memory proposalNames, address _tokenContract) {
+        require(_tokenContract != address(0), "Token contract address is required.");
         tokenContract = IMyToken(_tokenContract);
         for (uint i = 0; i < proposalNames.length; i++) {
             proposals.push(Proposal({
