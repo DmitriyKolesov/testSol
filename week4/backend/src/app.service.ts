@@ -64,6 +64,15 @@ export class AppService {
     });
     return formatEther(balance as bigint);
   }
+  async getVotes(address: Address): Promise<string> {
+    const votes = await this.publicClient.readContract({
+      address: this.getContractAddress(),
+      abi: tokenJson.abi,
+      functionName: 'getVotes',
+      args: [address],
+    });
+    return formatEther(votes as bigint);
+  }
   // tslint:disable-next-line:adjacent-overload-signatures
   async mintTokens(address, amount) {
     const walletClient = createWalletClient({
@@ -82,5 +91,23 @@ export class AppService {
     // tslint:disable-next-line:no-console
     console.log({mintTx});
     return mintTx;
+  }
+  async delegate(address) {
+    const walletClient = createWalletClient({
+      account: this.account,
+      chain: sepolia,
+      transport: custom(this.publicClient),
+    });
+    // @ts-ignore
+    const delegateTx = await walletClient.writeContract({
+      // account: this.account,
+      address: this.getContractAddress(),
+      abi: tokenJson.abi,
+      functionName: 'delegate',
+      args: [address],
+    });
+    // tslint:disable-next-line:no-console
+    console.log({delegateTx});
+    return delegateTx;
   }
 }

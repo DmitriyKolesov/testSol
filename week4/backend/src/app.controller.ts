@@ -30,6 +30,11 @@ export class AppController {
     return {result: await this.appService.getTokenBalance(address)};
   }
 
+  @Get('get-votes')
+  async getVotes(@Query('address') address: string) {
+    return {result: await this.appService.getVotes(address)};
+  }
+
   @Post('check-minter-role')
   @ApiBody({
     schema: {
@@ -52,5 +57,21 @@ export class AppController {
     // @ts-ignore
     const mintTx = await this.appService.mintTokens(address, amount);
     return {result: mintTx};
+  }
+
+  @Post('delegate')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        address: { title: 'address', type: 'string' },
+      },
+    },
+  })
+  async delegate(@Body() body: {address: string}) {
+    const {address} = body;
+    // @ts-ignore
+    const delegateTx = await this.appService.delegate(address);
+    return {result: delegateTx};
   }
 }

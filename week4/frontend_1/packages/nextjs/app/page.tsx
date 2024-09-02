@@ -8,6 +8,7 @@ import { Address } from "~~/components/scaffold-eth";
 import React from 'react';
 import { WalletInfo } from "~~/components/WalletInfo";
 import { RandomWord } from '~~/components/RandomWord';
+import {TokenSupply} from "~~/components/TokenSupply";
 
 
 const Home: NextPage = () => {
@@ -81,9 +82,12 @@ function PageBody() {
     <div className="text-center">
       <WalletInfo></WalletInfo>
     </div>
-  <div>
-    <RandomWord> </RandomWord>
-  </div>
+  {/*<div className="text-center">*/}
+  {/*  <RandomWord> </RandomWord>*/}
+  {/*</div>*/}
+      <div className="text-center">
+        <TokenSupply></TokenSupply>
+      </div>
     </>
   )
 }

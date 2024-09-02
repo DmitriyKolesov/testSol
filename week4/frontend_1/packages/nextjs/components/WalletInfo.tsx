@@ -4,6 +4,7 @@ import { WalletBalance } from '~~/components/WalletBalance';
 
 export const WalletInfo = () => {
   const { address, isConnecting, isDisconnected, chain } = useAccount();
+  console.log({account: useAccount()})
   if (address)
 
     return (
